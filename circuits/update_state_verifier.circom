@@ -254,4 +254,4 @@ template Main(n, m) {
     out <== computedRootFromNewReceiver[2**m - 1].out;
 }
 
-component main { public [txRoot, currentState] } = Main(4, 2);
+component main { public [txRoot, currentState] } = Main(6, 2);

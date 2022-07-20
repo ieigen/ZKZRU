@@ -34,7 +34,7 @@ BigInt.prototype.toJSON = function() {
 // const BAL_DEPTH = 12
 
 const TX_DEPTH = 2
-const BAL_DEPTH = 4
+const BAL_DEPTH = 6
 
 function generatePrvkey(i){
   prvkey = Buffer.from(i.toString().padStart(64,'0'), "hex");
@@ -86,7 +86,7 @@ const main = async() => {
 
   const numAccounts = 6
   const tokenTypes = [2, 1, 2, 1, 2, 1];
-  const balances = [1000, 20, 200, 100, 500, 20];
+  const balances = [1000, 200, 200, 300, 500, 200];
   const nonces = [0, 0, 0, 0, 0, 0];
 
   for (var i = 0; i < numAccounts; i++){
@@ -173,16 +173,19 @@ const main = async() => {
   // 3. Bob --10--> Daenerys,
   // 4. empty tx (operator --0--> withdraw)
 
-  fromAccountsIdx = [2, 4, 3, 1]
-  toAccountsIdx = [4, 0, 5, 0]
+  fromAccountsIdx = [2, 2,2,2,2, 2,2,2,2, 2,2,2,2, 2,2,2]
+  toAccountsIdx = [4, 4,4,4,4, 4,4,4,4, 4,4,4,4, 4,4,4,]
 
-  const amounts = [500, 200, 10, 0]
-  const txTokenTypes = [2, 2, 1, 0]
-  const txNonces = [0, 0, 0, 0]
+  const amounts = [10, 10, 10, 10,10,10,10,10,10,10,10,10,10,10,10,10]
+  const txTokenTypes = [2, 2,2,2,2, 2,2,2,2, 2,2,2,2, 2,2,2]
+  const txNonces = [0, 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
 
   var txs = new Array(TX_DEPTH ** 2)
 
-  for (var i = 0; i < txs.length; i++){
+  console.log("===============accounts length:",accounts.length)
+  console.log("===============paddedAccounts2 length:",paddedAccounts2.length)
+  for (var i = 0; i < TX_DEPTH ** 2; i++){
+    console.log("=========================================================: ",i)
     fromAccount = paddedAccounts2[fromAccountsIdx[i]];
     toAccount = paddedAccounts2[toAccountsIdx[i]];
     tx = new Transaction(
@@ -203,6 +206,7 @@ const main = async() => {
     tx.checkSignature()
 
     txs[i] = tx;
+
   }
 
   const txTree = new TxTree(txs);
