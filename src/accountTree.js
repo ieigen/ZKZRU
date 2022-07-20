@@ -31,7 +31,11 @@ module.exports = class AccountTree extends Tree {
       // verify tx exists in tx tree
       const [txProof, txProofPos] = txTree.getTxProofAndProofPos(tx);
       txTree.checkTxExistence(tx, txProof);
-      paths2txRoot[i] = [F.toString(txProof[0]), F.toString(txProof[1])];
+      paths2txRoot[i] = [];
+      for (let j = 0; j < txProof.length; j++){
+        paths2txRoot[i].push(F.toString(txProof[j]));
+      }
+
       paths2txRootPos[i] = txProofPos;
 
       // process transaction
